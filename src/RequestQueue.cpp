@@ -1,3 +1,4 @@
+// first in, first out container for holding requests that are not served
 #include "RequestQueue.h"
 
 using namespace std;
@@ -8,7 +9,7 @@ void RequestQueue::enqueue(const Request &req){
 
 Request RequestQueue::dequeue() {
     Request front = q.front();
-    q.pop()
+    q.pop();
     return front;
 }
 

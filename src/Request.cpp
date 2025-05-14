@@ -9,10 +9,10 @@
 using namespace std;
 
 // generate random IP address
-static std::mt19937 rng{ std::random_device{}() };
+static mt19937 rng{ random_device{}() };
 
 static string generateRandomIP() {
-    uniform_int_distribution<int> distOctet(0, 255);
+    uniform_int_distribution<int> distOctat(0, 255);
     ostringstream out;
     out << distOctat(rng) << '.'
         << distOctat(rng) << '.'
@@ -21,14 +21,14 @@ static string generateRandomIP() {
     return out.str();
 }
 
-Request makeRandomRequest(int maxProcessTime)
+Request makeRandomRequest(int maxProcessTime) {
     uniform_int_distribution<int> distTime(1, maxProcessTime);
-    bernoulli_distribution distPrivate(0.5);
     bernoulli_distribution distType(0.8);
 
     Request req;
-    req.ipIn = generateRandomIP(distPrivate(rng));
-    req.ipOut = generateRandomIP(false);
+    req.ipIn = generateRandomIP();
+    req.ipOut = "192.168.0.1";
     req.remainingTime = distTime(rng);
     req.type = distType(rng) ? 'S' : 'P';
     return req;
+}
