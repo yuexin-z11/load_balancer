@@ -10,3 +10,5 @@ struct request {
     int time;
     char type;
 }
+
+Request makeRandomRequest(int maxProcessTime);
