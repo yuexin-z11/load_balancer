@@ -25,6 +25,9 @@ int main() {
     LoadBalancer lb(initialServers, maxProcessTime);
 
     // run the simulation for the specified time
+    lb.blockCidr("10.0.0.0/8");
+    lb.blockCidr("203.0.113.0/24");
+    
     lb.prefill();
     lb.run(duration);
 

@@ -1,13 +1,23 @@
 // LoadBalancer.cpp
 #include "LoadBalancer.h"
 #include "Request.h"
+#include "ipBlocker.h"
 #include <algorithm>
 #include <iostream>
 #include <random>
 
 using namespace std;
 
-LoadBalancer::LoadBalancer(int initialServers, int t): servers(initialServers), maxTime(t), currentCycle(0) {}
+LoadBalancer::LoadBalancer(int initialServers, int t)
+     : servers(initialServers)
+     , queue()
+     , maxTime(t)
+     , currentCycle(0)
+     , firewall(){};
+
+void LoadBalancer::blockCidr(const string &cidr){
+    firewall.addBlock(cidr);
+}
 
 void LoadBalancer::run(int duration) {
     for (currentCycle = 0; currentCycle < duration; currentCycle++) {
@@ -42,6 +52,10 @@ void LoadBalancer::generateArrivals(int arrivalsPerCycle) {
     for (int i = 0; i < slots; ++i) {
         if (arrive(rng)) {
             queue.enqueue(makeRandomRequest(arrivalsPerCycle));
+            auto req = makeRandomRequest(arrivalsPerCycle);
+            if (firewall.isBlocked(req.ipIn)){
+                cout << "  [Dropped request from blocked IP " << req.ipIn << "]\n";
+            }
         }
     }
 }
