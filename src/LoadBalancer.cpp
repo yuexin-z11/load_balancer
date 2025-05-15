@@ -34,9 +34,11 @@ void LoadBalancer::run(int duration) {
         static thread_local mt19937 rng{random_device{}()};
         uniform_int_distribution<int> randomSlots(1, 30);
 
-        cout << "Cycle " << currentCycle << "\n";
-        cout << "Queue size: " << queue.size() << "\n";
-
+        if (currentCycle % 100 == 0){
+            cout << "Cycle " << currentCycle << "\n";
+            cout << "Queue size: " << queue.size() << "\n";
+        }
+        
         int arrivalsPerCycle = randomSlots(rng);
         generateArrivals(arrivalsPerCycle);
         dispatch();
@@ -56,6 +58,7 @@ void LoadBalancer::prefill() {
     cout << "Prefilled queue with " << initialCount 
               << " requests (" << servers.size() 
               << " servers × 20)." << endl;
+    cout << "\n";
 }
 
 /// \brief Generate and enqueue new requests for this cycle.
@@ -72,7 +75,7 @@ void LoadBalancer::generateArrivals(int arrivalsPerCycle) {
             queue.enqueue(makeRandomRequest(arrivalsPerCycle));
             auto req = makeRandomRequest(arrivalsPerCycle);
             if (firewall.isBlocked(req.ipIn)){
-                cout << "  [Dropped request from blocked IP " << req.ipIn << "]\n";
+                cout << "  [Dropped request from blocked IP " << req.ipIn;
             }
         }
     }
@@ -101,7 +104,14 @@ void LoadBalancer::dispatch() {
 ///
 /// Decrements remaining time on active requests and marks servers idle when done.
 void LoadBalancer::allCycles() {
-    for(auto &srv : servers) srv.cycle();
+    for(auto &srv : servers) {
+        srv.cycle();
+        bool wasB = !srv.isIdle();
+        srv.cycle();
+        if (wasB && srv.isIdle()){
+            totalProcessed ++;
+        }
+    }
 }
 
 /// \brief Auto-scale the number of servers based on queue length.
@@ -114,14 +124,16 @@ void LoadBalancer::scale() {
 
     if (q_size > n * upThresh) {
         servers.emplace_back();
-        std::cout << "  ** Scaling UP: queue ("<< q_size <<") > " 
-                  << n << " * " << upThresh 
-                  << " → now " << servers.size() << " servers\n";
+        totalScaleUps++;
+        cout << "  ** Scaling UP: queue ("<< q_size <<") > " 
+             << n << " * " << upThresh 
+             << " → now " << servers.size() << " servers\n";
     }
     else if (n > 1 && q_size < n * downThresh) {
         servers.pop_back();
-        std::cout << "  ** Scaling DOWN: queue ("<< q_size <<") < " 
-                  << n << " * " << downThresh 
-                  << " → now " << servers.size() << " servers\n";
+        totalScaleDowns++;
+        cout << "  ** Scaling DOWN: queue ("<< q_size <<") < " 
+             << n << " * " << downThresh 
+             << " → now " << servers.size() << " servers\n";
     }
 }

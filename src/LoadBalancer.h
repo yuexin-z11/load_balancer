@@ -28,12 +28,27 @@ public:
     /// \param cidr The CIDR notation (e.g., "192.168.0.0/24") to block.
     void blockCidr(const std::string &cidr);
 
+    /// \brief Get the total number of processed requests.
+    /// \return The cumulative count of processed requests.
+    int getTotalProcessed() const { return totalProcessed; }
+
+    /// \brief Get the total number of times the system has scaled up.
+    /// \return The cumulative count of scale-up events.
+    int getTotalScaleUps() const { return totalScaleUps; }
+
+    /// \brief Get the total number of times the system has scaled down.
+    /// \return The cumulative count of scale-down events.
+    int getTotalScaleDowns() const { return totalScaleDowns; }
+
 private:
     vector<WebServer> servers;        ///< Active pool of web servers.
     RequestQueue queue;               ///< Queue of pending requests.
     int maxTime;                      ///< Max processing time for random requests.
     int currentCycle;                 ///< Current simulation cycle.
     ipBlocker firewall;               ///< IP blocker for filtering incoming requests.
+    int totalProcessed   = 0;        ///< # of requests fully processed
+    int totalScaleUps    = 0;        ///< # of times we added a server
+    int totalScaleDowns  = 0;        ///< # of times we removed a server
 
     /// \brief Dispatches queued requests to idle servers.
     void dispatch(); 

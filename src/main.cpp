@@ -24,12 +24,15 @@ int main() {
     // get user inputs
     cout << "Enter inital number of web servers: ";
     cin >> initialServers;
+    cout << "\n";
 
     cout << "Enter maximum processing time for any request: ";
     cin >> maxProcessTime;
+    cout << "\n";
 
     cout << "Enter total simulation duration (in time units): ";
     cin >> duration;
+    cout << "\n";
 
     // construct the loadbalancer
     LoadBalancer lb(initialServers, maxProcessTime);
@@ -41,6 +44,11 @@ int main() {
     // Prefill queue and run the simulation
     lb.prefill();
     lb.run(duration);
+
+    cout << "\n=== Simulation Summary ===\n";
+    cout << "Total requests processed : " << lb.getTotalProcessed()  << "\n";
+    cout << "Total scale-ups          : " << lb.getTotalScaleUps()   << "\n";
+    cout << "Total scale-downs        : " << lb.getTotalScaleDowns() << "\n";
 
     cout << "Simulation complete after " << duration << " time cycles. \n";
 }
