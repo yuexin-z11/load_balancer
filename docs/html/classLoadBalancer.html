@@ -88,6 +88,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a140d4bbbb4a0e972499c5ecd13a163c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLoadBalancer.html#a140d4bbbb4a0e972499c5ecd13a163c0">blockCidr</a> (const std::string &amp;cidr)</td></tr>
 <tr class="memdesc:a140d4bbbb4a0e972499c5ecd13a163c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a CIDR block to the firewall to drop matching source IPs.  <a href="classLoadBalancer.html#a140d4bbbb4a0e972499c5ecd13a163c0">More...</a><br /></td></tr>
 <tr class="separator:a140d4bbbb4a0e972499c5ecd13a163c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a650baa17f89cf43513df60d04f851dad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLoadBalancer.html#a650baa17f89cf43513df60d04f851dad">getTotalProcessed</a> () const</td></tr>
+<tr class="memdesc:a650baa17f89cf43513df60d04f851dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of processed requests.  <a href="classLoadBalancer.html#a650baa17f89cf43513df60d04f851dad">More...</a><br /></td></tr>
+<tr class="separator:a650baa17f89cf43513df60d04f851dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaf13702973177d826c6cfbe4041fd6d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLoadBalancer.html#afaf13702973177d826c6cfbe4041fd6d">getTotalScaleUps</a> () const</td></tr>
+<tr class="memdesc:afaf13702973177d826c6cfbe4041fd6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of times the system has scaled up.  <a href="classLoadBalancer.html#afaf13702973177d826c6cfbe4041fd6d">More...</a><br /></td></tr>
+<tr class="separator:afaf13702973177d826c6cfbe4041fd6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2771227f2bf5c5aba849059012673b99"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLoadBalancer.html#a2771227f2bf5c5aba849059012673b99">getTotalScaleDowns</a> () const</td></tr>
+<tr class="memdesc:a2771227f2bf5c5aba849059012673b99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of times the system has scaled down.  <a href="classLoadBalancer.html#a2771227f2bf5c5aba849059012673b99">More...</a><br /></td></tr>
+<tr class="separator:a2771227f2bf5c5aba849059012673b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simulates a load balancer that dispatches web requests across servers, auto-scales server count, and filters requests via CIDR-based blocking. </p>
@@ -158,6 +167,90 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a650baa17f89cf43513df60d04f851dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a650baa17f89cf43513df60d04f851dad">&#9670;&nbsp;</a></span>getTotalProcessed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LoadBalancer::getTotalProcessed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the total number of processed requests. </p>
+<dl class="section return"><dt>Returns</dt><dd>The cumulative count of processed requests. </dd></dl>
+
+</div>
+</div>
+<a id="a2771227f2bf5c5aba849059012673b99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2771227f2bf5c5aba849059012673b99">&#9670;&nbsp;</a></span>getTotalScaleDowns()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LoadBalancer::getTotalScaleDowns </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the total number of times the system has scaled down. </p>
+<dl class="section return"><dt>Returns</dt><dd>The cumulative count of scale-down events. </dd></dl>
+
+</div>
+</div>
+<a id="afaf13702973177d826c6cfbe4041fd6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaf13702973177d826c6cfbe4041fd6d">&#9670;&nbsp;</a></span>getTotalScaleUps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LoadBalancer::getTotalScaleUps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the total number of times the system has scaled up. </p>
+<dl class="section return"><dt>Returns</dt><dd>The cumulative count of scale-up events. </dd></dl>
 
 </div>
 </div>
